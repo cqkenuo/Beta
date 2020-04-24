@@ -1,0 +1,66 @@
+version: "2"
+services:
+#redis服务器
+  redis:
+    privileged: false
+    image: redis:5.0.7
+    container_name: Beta_redis
+    restart: always
+    ports:
+      - "6379:6379"
+    # 这里设置redis密码
+    command: redis-server --requirepass "zbcmeX9yv8Xk2RfX4LTk"
+#mysql服务器
+  mysql:
+    privileged: false
+    image: mysql:5.7.28
+    container_name: Beta_mysql
+    restart: always
+    volumes:
+      - "./mysql/init:/docker-entrypoint-initdb.d/"
+      - "./mysql/data:/var/lib/mysql"
+    ports:
+      - "3306:3306"
+    environment:
+      # 这里设置MySQL密码
+      - "MYSQL_ROOT_PASSWORD=daMoggiEvyWGTouy"
+      - "MYSQL_ROOT_HOST=%"
+#网站服务器
+  beta:
+    container_name: Beta
+    tty: true
+    ports: 
+      - "8090:8090"
+    privileged: false
+    depends_on:
+      - mysql
+      - redis
+    links:
+      - mysql:mysql
+      - redis:redis
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    volumes:
+      - "./www:/root/Beta"
+      - "./www/nginx.conf:/etc/nginx/nginx.conf"
+      - "./www/runserver.sh:/root/Beta/runserver.sh"
+    command: /bin/bash -c "chmod +x /root/Beta/runserver.sh && /root/Beta/runserver.sh"
+#后台异步任务执行服务器[如果任务多，可以多设置几个执行服务器]
+  work1:
+    container_name: Beta_worker1
+    tty: true
+    privileged: false
+    depends_on:
+      - mysql
+      - redis
+    links:
+      - mysql:mysql
+      - redis:redis
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    volumes:
+      - "./www:/root/Beta"
+    working_dir: /root/Beta
+    command: "celery -A Beta worker -l info -P eventlet"

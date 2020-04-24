@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block content1%}
+<!-- 左侧导航栏 -->
+<div class="layui-side layui-bg-black">
+    <div class="layui-side-scroll">
+        <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+        <ul class="layui-nav layui-nav-tree" lay-filter="test">
+            {% for label in label_list%}
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a href="javascript:;">{{ label.label_name }}</a>
+                    <dl class="layui-nav-child">
+                        {% for script in script_list %}
+                            {% if script.script_label.label_name == label.label_name %}
+                                <dd>
+                                    <a href="{% url 'scriptDisplay' script.script_id %}">
+                                        {{ script.script_name }}
+                                    </a>
+                                </dd>
+                            {% endif %}
+                        {% endfor %}
+                    </dl>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+<!-- 内容主体区域 -->
+<div class="layui-body" id="pocTest" style="padding: 15px;">
+        <!-- 功能页面展示面板 -->
+        {% autoescape off %}
+            {{ display }}
+        {% endautoescape %}
+</div>
+
+<!-- 底部固定区域 -->
+<div class="layui-footer">
+    © Powered By 是大方子 | 贝塔安全实验室 www.ms08067.com
+    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+    使用时请遵守法律法规，使用时产生的法律纠纷与本平台无关!!!
+    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+    <b>
+        <font>【</font>
+    </b>
+    <b>
+        <font>当前时间:</font>
+    </b>
+    <b>
+        <font id="dateTime" color="red"></font>
+    </b>
+    <b>
+        <font>】</font>
+    </b>
+</div>
+
+{% endblock %}
+
+{% block content2%}
+{% load staticfiles %}
+<script src="{% static "layui/layui.all.js" %}"></script>
+<script>
+    Date.prototype.format = function (fmt) {
+        var o = {
+            "y+": this.getFullYear, //年
+            "M+": this.getMonth() + 1, //月份
+            "d+": this.getDate(), //日
+            "h+": this.getHours(), //小时
+            "m+": this.getMinutes(), //分
+            "s+": this.getSeconds() //秒
+        };
+        if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o)
+            if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        return fmt;
+    }
+    setInterval("document.getElementById('dateTime').innerHTML = (new Date()).format('yyyy-MM-dd hh:mm:ss');", 1000);
+</script>
+{% endblock %}

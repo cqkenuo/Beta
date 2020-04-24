@@ -1,0 +1,6 @@
+1. 默认管理员密码   admin:ms08067   请及时修改默认密码
+2. msql和redis数据库的密码在docker-compose.yml中配置   请及时修改默认密码
+3. 网站数据库配置在www/Beta/settings.py中进行配置
+4. 后台管理地址http://xxxx/admin
+5. 最好重新生成项目的SECRET_KEY
+6. 忘记密码需要配置发送验证码的邮箱，请自行再settings.py中设置
