@@ -1,6 +1,21 @@
+- [ 前言：](#head1)
+- [ 环境要求：](#head2)
+	- [ 环境配置](#head3)
+- [ 使用的技术](#head4)
+	- [ 平台文件结构介绍](#head5)
+- [ 使用说明](#head6)
+	- [1. 平台的安装](#head7)
+	- [2. 添加脚本分类](#head8)
+	- [3. 添加脚本](#head9)
+	- [3.1 网页工具的引用](#head10)
+	- [4. 脚本使用【前台执行】：适合短时间任务](#head11)
+	- [ 5.脚本使用【后台异步执行】：适合长时间任务](#head12)
+	- [4. 忘记密码，平台发件邮箱配置](#head13)
+- [ Q&A](#head14)
+	- [ 注意：禁止使用本项目所有软件及其文章等资源进行非法测试！](#head15)
 [toc]
 
-### 前言：
+### <span id="head1"> 前言：</span>
 
 ​		这个想法其实很早就有了，想做个跟Metasploit类似的基于web渗透测试平台，平台可以允许加入自定义脚本，只需要提交自定义的脚本并编写脚本对应的web界面模板就可以直接在平台上进行使用，友好的web界面，没有复杂的界面与环境设置，只需要在web界面填入参数点点鼠标剩下的就交给平台来处理。
 
@@ -10,11 +25,11 @@
 
 ------
 
-### 环境要求：
+### <span id="head2"> 环境要求：</span>
 
 Docker + Docker-compose
 
-#### 环境配置
+#### <span id="head3"> 环境配置</span>
 
 Docker安装
 
@@ -32,7 +47,7 @@ chmod +x /usr/local/bin/docker-compose
 
 ------
 
-### 使用的技术
+### <span id="head4"> 使用的技术</span>
 
 - Django
 
@@ -48,52 +63,52 @@ chmod +x /usr/local/bin/docker-compose
 
 ------
 
-#### 平台文件结构介绍
+#### <span id="head5"> 平台文件结构介绍</span>
 
 ├─mysql：【MySQL数据库文件】
 │  ├─data：【mysql数据库容器挂载的数据目录】
 │  └─init：【里面放着mysql容器初始化的sql文件】
 └─www：【网站文件】
-    ├─Beta：【项目目录】
-    │  └─__pycache__
-    ├─index
-    │  ├─migrations
-    │  │  └─__pycache__
-    │  ├─static
-    │  ├─templates
-    │  └─__pycache__
-    ├─result：【存放后台异步任务的执行结果】
-    ├─script：【脚本存放目录】
-    ├─static：【静态资源】
-    │  ├─css
-    │  ├─fonts
-    │  ├─images
-    │  ├─js
-    │  └─layui
-    │      ├─css
-    │      │  └─modules
-    │      │      ├─laydate
-    │      │      │  └─default
-    │      │      └─layer
-    │      │          └─default
-    │      ├─font
-    │      ├─images
-    │      │  └─face
-    │      └─lay
-    │          └─modules
-    ├─templates
-    └─user
-        ├─migrations
-        │  └─__pycache__
-        ├─static
-        ├─templates
-        └─__pycache__
+├─Beta：【项目目录】
+│  └─__pycache__
+├─index
+│  ├─migrations
+│  │  └─__pycache__
+│  ├─static
+│  ├─templates
+│  └─__pycache__
+├─result：【存放后台异步任务的执行结果】
+├─script：【脚本存放目录】
+├─static：【静态资源】
+│  ├─css
+│  ├─fonts
+│  ├─images
+│  ├─js
+│  └─layui
+│      ├─css
+│      │  └─modules
+│      │      ├─laydate
+│      │      │  └─default
+│      │      └─layer
+│      │          └─default
+│      ├─font
+│      ├─images
+│      │  └─face
+│      └─lay
+│          └─modules
+├─templates
+└─user
+├─migrations
+│  └─__pycache__
+├─static
+├─templates
+└─__pycache__
 
 
 
 ------
 
-### 使用说明
+### <span id="head6"> 使用说明</span>
 
 注意事项：
 
@@ -106,13 +121,13 @@ chmod +x /usr/local/bin/docker-compose
 6. 忘记密码需要配置发送验证码的邮箱，请自行再settings.py中设置
 ```
 
-#### 1. 平台的安装
+#### <span id="head7">1. 平台的安装</span>
 
 1. 把文件放入服务器
 
-   ![image-20200326232322444.png](https://github.com/sdfzy/Beta/blob/master/images/image-20200326232322444.png?raw=true)
+![image-20200326232322444.png](https://github.com/sdfzy/Beta/blob/master/images/image-20200326232322444.png?raw=true)
 
-  
+
 
 2. 进入文件夹，并执行`docker-compose up -d`，然后等待网站构建完成【我的服务器已经构建过了，所以没有构建流程】
 
@@ -120,17 +135,17 @@ chmod +x /usr/local/bin/docker-compose
 
 3. 构建完成后，容器需要进行数据库的初始化以及网站的初始化。等待数秒钟后访问http://ip:8090，就会出现登录界面
 
-   ![image-20200326232643862.png](https://github.com/sdfzy/Beta/blob/master/images/image-20200326232643862.png?raw=true)
+![image-20200326232643862.png](https://github.com/sdfzy/Beta/blob/master/images/image-20200326232643862.png?raw=true)
 
-#### 2. 添加脚本分类
+#### <span id="head8">2. 添加脚本分类</span>
 
 这里假设我要添加一个【信息收集】分类，并在【信息收集】类型下添加一个【端口扫描】脚本
 
-  1. 先到/www/script中创建一个名为【collection】的文件夹，【信息收集】分类的脚本都需要放到这个目录下
+1. 先到/www/script中创建一个名为【collection】的文件夹，【信息收集】分类的脚本都需要放到这个目录下
 
-     ![image-20200326234601312.png](https://github.com/sdfzy/Beta/blob/master/images/image-20200326234601312.png?raw=true)
+![image-20200326234601312.png](https://github.com/sdfzy/Beta/blob/master/images/image-20200326234601312.png?raw=true)
 
-  2. 登录网站后台http://ip:8090/admin,在【脚本分类】中添加分类:
+2. 登录网站后台http://ip:8090/admin,在【脚本分类】中添加分类:
 
 ![image-20200326234655223.png](https://github.com/sdfzy/Beta/blob/master/images/image-20200326234655223.png?raw=true)
 
@@ -138,9 +153,9 @@ chmod +x /usr/local/bin/docker-compose
 
 3. 然后就可以看到平台就会增加一个【信息收集】的分类
 
-   ![image-20200326234839630.png](https://github.com/sdfzy/Beta/blob/master/images/image-20200326234839630.png?raw=true)
+![image-20200326234839630.png](https://github.com/sdfzy/Beta/blob/master/images/image-20200326234839630.png?raw=true)
 
-#### 3. 添加脚本
+#### <span id="head9">3. 添加脚本</span>
 
 ​		我们需要先给我们的脚本写一个web模板，web模板的名称跟脚本的名称同名一起放入collection文件夹。因为平台会根据【脚本名称.html】这个格式自动读取渲染脚本的web界面。
 
@@ -242,19 +257,19 @@ web模板代码：
 
 3. 到后台添加脚本
 
-   这里需要注意的是，脚本的后缀也要写上去，平台根据后缀来识别运行
+这里需要注意的是，脚本的后缀也要写上去，平台根据后缀来识别运行
 
-   ![image-20200327000252174.png](https://github.com/sdfzy/Beta/blob/master/images/image-20200327000252174.png?raw=true)
+![image-20200327000252174.png](https://github.com/sdfzy/Beta/blob/master/images/image-20200327000252174.png?raw=true)
 
 ![image-20200327000316872.png](https://github.com/sdfzy/Beta/blob/master/images/image-20200327000316872.png?raw=true)
 
 4. 脚本添加成功
 
-   ![image-20200327000430510.png](https://github.com/sdfzy/Beta/blob/master/images/image-20200327000430510.png?raw=true)
+![image-20200327000430510.png](https://github.com/sdfzy/Beta/blob/master/images/image-20200327000430510.png?raw=true)
 
 
 
-#### 3.1 网页工具的引用
+#### <span id="head10">3.1 网页工具的引用</span>
 
 ​		除了脚本添加，对于很不错的网页工具也可以通过模板直接引入。
 
@@ -274,7 +289,7 @@ web模板代码：
 
 ![image-20200327004203573.png](https://github.com/sdfzy/Beta/blob/master/images/image-20200327004203573.png?raw=true)
 
-#### 4. 脚本使用【前台执行】：适合短时间任务
+#### <span id="head11">4. 脚本使用【前台执行】：适合短时间任务</span>
 
 ![image-20200327001632434.png](https://github.com/sdfzy/Beta/blob/master/images/image-20200327001632434.png?raw=true)
 
@@ -284,7 +299,7 @@ web模板代码：
 
 ![image-20200327001606554.png](https://github.com/sdfzy/Beta/blob/master/images/image-20200327001606554.png?raw=true)
 
-#### 5.脚本使用【后台异步执行】：适合长时间任务
+#### <span id="head12"> 5.脚本使用【后台异步执行】：适合长时间任务</span>
 
 ![image-20200327001729610.png](https://github.com/sdfzy/Beta/blob/master/images/image-20200327001729610.png?raw=true)
 
@@ -304,7 +319,7 @@ web模板代码：
 
 ![image-20200327001936174.png](https://github.com/sdfzy/Beta/blob/master/images/image-20200327001936174.png?raw=true)
 
-#### 4. 忘记密码，平台发件邮箱配置
+#### <span id="head13">4. 忘记密码，平台发件邮箱配置</span>
 
 
 
@@ -318,7 +333,7 @@ web模板代码：
 
 2. 然后到/www/Beta/settings.py中进行设置
 
-   ![image-20200327002631222.png](https://github.com/sdfzy/Beta/blob/master/images/image-20200327002631222.png?raw=true)
+![image-20200327002631222.png](https://github.com/sdfzy/Beta/blob/master/images/image-20200327002631222.png?raw=true)
 
 3. 然后输入命令` docker restart Beta`重启平台
 
@@ -326,13 +341,13 @@ web模板代码：
 
 4. 测试更改密码
 
-   ​	填入用户名与对应的邮箱
+​	填入用户名与对应的邮箱
 
-   ![image-20200327002934589.png](https://github.com/sdfzy/Beta/blob/master/images/image-20200327002934589.png?raw=true)
+![image-20200327002934589.png](https://github.com/sdfzy/Beta/blob/master/images/image-20200327002934589.png?raw=true)
 
-   ![image-20200327002922546.png](https://github.com/sdfzy/Beta/blob/master/images/image-20200327002922546.png?raw=true)
+![image-20200327002922546.png](https://github.com/sdfzy/Beta/blob/master/images/image-20200327002922546.png?raw=true)
 
-### Q&A
+### <span id="head14"> Q&A</span>
 
 Q：如果运行其他类型的脚本怎么办？
 
@@ -362,4 +377,4 @@ QQ：492445574
 
 
 
-##### 注意：禁止使用本项目所有软件及其文章等资源进行非法测试！
+##### <span id="head15"> 注意：禁止使用本项目所有软件及其文章等资源进行非法测试！</span>
