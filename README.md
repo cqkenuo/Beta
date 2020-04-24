@@ -252,7 +252,7 @@ web模板代码：
 
 ![image-20200327004203573.png](https://github.com/sdfzy/Beta/blob/master/images/image-20200327004203573.png?raw=true)
 
-#### <span id="head11">4. 脚本使用【前台执行】：适合短时间任务</span>
+#### <span id="head11">4. 脚本使用【提交】：适合短时间任务</span>
 
 ![image-20200327001632434.png](https://github.com/sdfzy/Beta/blob/master/images/image-20200327001632434.png?raw=true)
 
@@ -262,7 +262,7 @@ web模板代码：
 
 ![image-20200327001606554.png](https://github.com/sdfzy/Beta/blob/master/images/image-20200327001606554.png?raw=true)
 
-#### <span id="head12"> 5.脚本使用【后台异步执行】：适合长时间任务</span>
+#### <span id="head12"> 5.脚本使用【加入任务队列】：适合长时间任务</span>
 
 ![image-20200327001729610.png](https://github.com/sdfzy/Beta/blob/master/images/image-20200327001729610.png?raw=true)
 
