@@ -63,46 +63,9 @@ chmod +x /usr/local/bin/docker-compose
 
 ------
 
-#### <span id="head5"> 平台文件结构介绍</span>
+#### <span id="head5"> 平台文件结构</span>
 
-├─mysql：【MySQL数据库文件】
-│  ├─data：【mysql数据库容器挂载的数据目录】
-│  └─init：【里面放着mysql容器初始化的sql文件】
-└─www：【网站文件】
-├─Beta：【项目目录】
-│  └─__pycache__
-├─index
-│  ├─migrations
-│  │  └─__pycache__
-│  ├─static
-│  ├─templates
-│  └─__pycache__
-├─result：【存放后台异步任务的执行结果】
-├─script：【脚本存放目录】
-├─static：【静态资源】
-│  ├─css
-│  ├─fonts
-│  ├─images
-│  ├─js
-│  └─layui
-│      ├─css
-│      │  └─modules
-│      │      ├─laydate
-│      │      │  └─default
-│      │      └─layer
-│      │          └─default
-│      ├─font
-│      ├─images
-│      │  └─face
-│      └─lay
-│          └─modules
-├─templates
-└─user
-├─migrations
-│  └─__pycache__
-├─static
-├─templates
-└─__pycache__
+![20200424201413.jpg](https://github.com/sdfzy/Beta/blob/master/images/20200424201413.jpg?raw=true)
 
 
 
